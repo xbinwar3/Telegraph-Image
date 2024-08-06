@@ -8,6 +8,7 @@ export async function onRequestPost(context) {  // Contents of context object
         next, // used for middleware or to fetch assets    
         data, // arbitrary space for passing data between middlewares 
     } = context;
+    console.log(context);
     const clonedRequest = request.clone();
     await errorHandling(context);
     telemetryData(context);
