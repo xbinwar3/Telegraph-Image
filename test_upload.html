@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+</head>
+<body>
+    <h1>Upload Image</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const input = document.getElementById('fileInput');
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch('https://img.xbinwar.us.kg/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const result = await response.text();
+                    document.getElementById('result').innerText = `Upload successful! Response: ${result}`;
+                } else {
+                    document.getElementById('result').innerText = `Upload failed. Status: ${response.status}`;
+                }
+            } catch (error) {
+                document.getElementById('result').innerText = `Upload failed. Error: ${error}`;
+            }
+        });
+    </script>
+</body>
+</html>
